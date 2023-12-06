@@ -8,7 +8,6 @@ import { contractAddress, contractAbi } from "../utils/constance";
 //createing context
 export const TransactionContext = createContext();
 
-
 //Destructuring window object
 const { ethereum } = window;
 
@@ -18,8 +17,6 @@ const getEthereumContract = () => {
   const signer = provider.getSigner();
 
   const transactionContract = new ethers.Contract(contractAddress, contractAbi, signer);
-
-  console.log(transactionContract)
   //returning Transaction contarct
   return transactionContract;
 }
@@ -32,6 +29,7 @@ export const TransactionContextProvider = ({ children }) => {
   const [connectedWallet, setConnectedWallet] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [transactionCount, setTransactionCount] = useState(localStorage.getItem('transactionCount'));
+  const [transactions, setTransactions] = useState([]);
 
   //wallet connection function 
   const ConnectWallet = async () => {
@@ -45,16 +43,60 @@ export const TransactionContextProvider = ({ children }) => {
     }
   }
 
+
+  //getting all transaction details
+
+  const getAllAvailableTransactions = async () => {
+    try {
+      if (!ethereum) {
+        return alert("Please Install MetaMask To Continue.")
+      }
+      const transactionContract = getEthereumContract();
+      //getting all transactions from blockchain
+      const Availabletransactions = await transactionContract.getAllTransactions();
+      //Fomattting transcation details
+      const formattedTranscation = Availabletransactions.map(data => ({
+        addressTo: data.receiver,
+        addressFrom: data.sender,
+        timestamp: new Date(data.timestamp.toNumber() * 1000).toLocaleString(),
+        message: data.message,
+        keyword: data.keyword,
+        amount: parseInt(data.amount._hex) / (10 ** 18)
+      }))
+      //setting transactions to state variable
+      setTransactions(formattedTranscation);
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
   //Checking If Wallet Is Already Connected
   const checkIfWalletIsConnected = async () => {
     if (!ethereum) {
       return alert("Please Install MetaMask To Continue.")
     }
     if (connectedWallet === '') {
-      ConnectWallet()
+      ConnectWallet();
+      getAllAvailableTransactions();
 
     }
 
+  }
+
+  //Checking If Transaction Exists
+  const checkIfTransactionExists = async () => {
+    try {
+      //Instanciating Ethereum contract 
+      const transtactionContract = getEthereumContract();
+
+      const transactionCount = await transtactionContract.getTransactionCount();
+      localStorage.setItem('transactionCount', transactionCount)
+
+    } catch (error) {
+      console.log(error);
+
+
+    }
   }
 
   //Main Ethereum Sending Function 
@@ -111,11 +153,12 @@ export const TransactionContextProvider = ({ children }) => {
   // UseEffect to run function at startup 
   useEffect(() => {
     checkIfWalletIsConnected();
+    checkIfTransactionExists();
   }, [])
 
   return (
 
-    <TransactionContext.Provider value={{ connectedWallet, sendTransaction, ConnectWallet, isLoading }
+    <TransactionContext.Provider value={{ connectedWallet, transactions, transactionCount, sendTransaction, ConnectWallet, isLoading }
     }>
       {children}
     </TransactionContext.Provider >

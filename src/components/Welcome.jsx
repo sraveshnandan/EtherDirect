@@ -15,9 +15,6 @@ const Welcome = () => {
   //Form state handler 
   const [formData, setFormData] = useState({ addressTo: "", amount: "", keyword: "", message: "" });
 
-  //Form HandleChange Function 
-
-
   //Form submit handler 
 
   const handleSubmit = (e) => {
@@ -83,7 +80,7 @@ const Welcome = () => {
         {connectedWallet !== '' ? (
           <div className="w-full flex-col h-max mb-12 flex items-center justify-start pt-4 mf:w-1/2  rounded-lg ">
             {/* Etherium Card  */}
-            <div className="eth-card hover:scale-105 cursor-pointer duration-500 h-44 w-[60%] rounded-md flex flex-col">
+            <div className="eth-card hover:scale-105 cursor-pointer duration-500 h-44 md:w-[70%] w-[80%] rounded-lg flex flex-col">
               <div className="h-12 p-4 flex justify-between items-center">
                 <FaEthereum className="text-xl w-8 h-8 p-1 border-2 rounded-full cursor-pointer border-white" />
                 <FaInfoCircle className=" cursor-pointer text-white" />
@@ -98,12 +95,12 @@ const Welcome = () => {
                 <span className="text-white font-semibold text-sm">
                   {SortenAddress(connectedWallet)}
                 </span>
-                <span className="text-2xl font-[450] text-white">etereum</span>
+                <span className="text-2xl font-[450] text-white">ethereum</span>
               </div>
             </div>
 
             {/* Transation Form */}
-            <div className="white-glassmorphism rounded-lg shadow-md w-[60%] mt-4 p-2  ">
+            <div className="white-glassmorphism rounded-lg shadow-md md:w-[70%] w-full mt-4 p-2  ">
               <div className="flex flex-col bg-transparent">
                 <input
                   type="text"
@@ -140,7 +137,7 @@ const Welcome = () => {
                 <hr className="my-2 bg-slate-400" />
                 {
                   isLoading === true ? (
-                   <div className="w-full flex items-center justify-center">
+                   <div className="w-full my-4 flex items-center justify-center">
                      <Loader />
                    </div>
 
@@ -159,7 +156,7 @@ const Welcome = () => {
           <img
             src={i}
             alt="etherium"
-            className="md:w-[60%] h-fit  w-full object-cover ethimg cursor-pointer"
+            className="md:w-[60%] transition-all duration-500 hover:hue-rotate-60  hover:shadow-2xl hover:drop-shadow-2xl  h-fit  w-full object-cover ethimg cursor-pointer"
           />
         )}
       </div >

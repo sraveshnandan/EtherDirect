@@ -10,14 +10,14 @@ const Why = () => {
 
     }
     return (
-      <div className={`${dim} text-white hover:shadow-md hover:shadow-slate-600 duration-500 p-4 m-2 rounded-lg bg-[#333] flex `}>
+      <div className={`${dim} text-white hover:shadow-md hover:shadow-slate-600 duration-500 p-4 m-2 rounded-lg bg-[#122] flex `}>
         <div className="w-2/3 flex gap-4 flex-col">
           <span className="text-3xl font-semibold ">{title}</span>
           <span className="text-sm font-semibold mb-2">{desc}</span>
           <Link className="font-bold w-fit hover:text-primary">Learn More ↗</Link>
         </div>
         <div className="w-1/3 flex items-end justify-end">
-          <img src={i} alt="s-eth" className=" w-40 h-40 hover:hue-rotate-60 object-cover cursor-pointer " />
+          <img src={i} alt="s-eth" className=" w-40 opacity-20 hover:opacity-95  h-40 hover:hue-rotate-60 object-cover cursor-pointer " />
         </div>
       </div>
     )
