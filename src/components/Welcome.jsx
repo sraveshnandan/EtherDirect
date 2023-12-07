@@ -6,8 +6,12 @@ import SortenAddress from "../utils/ShortenAddress";
 import { useState } from "react";
 import { TransactionContext } from "../Context/TransactionContext";
 import { Loader } from "../components"
+import { toast } from "sonner";
 
 const Welcome = () => {
+
+
+
 
   const { connectedWallet, ConnectWallet, sendTransaction, isLoading } = useContext(TransactionContext);
 
@@ -23,7 +27,7 @@ const Welcome = () => {
     console.log("submit function invocked");
     const { addressTo, amount, keyword, message } = formData;
     if (!addressTo || !amount || !keyword || !message) {
-      return alert("Please Fill All Fields.");
+      return toast.warning("Please fill all fields.");
     }
     sendTransaction(formData);
     console.log("send transaction invocked")
@@ -137,9 +141,9 @@ const Welcome = () => {
                 <hr className="my-2 bg-slate-400" />
                 {
                   isLoading === true ? (
-                   <div className="w-full my-4 flex items-center justify-center">
-                     <Loader />
-                   </div>
+                    <div className="w-full my-4 flex items-center justify-center">
+                      <Loader />
+                    </div>
 
                   ) : <button
                     type="submit"

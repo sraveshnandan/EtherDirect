@@ -2,6 +2,7 @@
 import { ethers } from "ethers";
 import { useState, useEffect, createContext } from "react";
 import { contractAddress, contractAbi } from "../utils/constance";
+import { toast } from "sonner";
 
 
 
@@ -34,10 +35,16 @@ export const TransactionContextProvider = ({ children }) => {
   //wallet connection function 
   const ConnectWallet = async () => {
     try {
+      if (!ethereum) {
+        return toast.info("Please install metamask to continue.")
+        
+      }
       const account = await ethereum.request({ method: "eth_requestAccounts" });
       setConnectedWallet(account[0]);
+      toast.success("Wallet Connected.");
     } catch (error) {
       console.log(error);
+      toast.error("Unable to connect wallet.");
       throw new Error('No ethereum object.')
 
     }
@@ -48,8 +55,9 @@ export const TransactionContextProvider = ({ children }) => {
 
   const getAllAvailableTransactions = async () => {
     try {
-      if (!ethereum) {
-        return alert("Please Install MetaMask To Continue.")
+        if (!ethereum) {
+        return toast.info("Please install metamask to continue.")
+        
       }
       const transactionContract = getEthereumContract();
       //getting all transactions from blockchain
@@ -66,7 +74,8 @@ export const TransactionContextProvider = ({ children }) => {
       //setting transactions to state variable
       setTransactions(formattedTranscation);
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast.error("Unable to fetch transactions.");
 
     }
   }
@@ -94,6 +103,7 @@ export const TransactionContextProvider = ({ children }) => {
 
     } catch (error) {
       console.log(error);
+      toast.error("Unable to fetch transaction count.");
 
 
     }
@@ -105,8 +115,9 @@ export const TransactionContextProvider = ({ children }) => {
     try {
       console.log("sendTransaction function invocked");
       const { addressTo, amount, keyword, message } = data;
-      if (!ethereum) {
-        return alert("Please Install MetaMask To Continue.")
+        if (!ethereum) {
+        return toast.info("Please install metamask to continue.")
+        
       }
       //Instanciating Ethereum contract 
       const transtactionContract = getEthereumContract();
@@ -114,6 +125,7 @@ export const TransactionContextProvider = ({ children }) => {
 
       //Parsing Ethereum value 
       const parsedAmount = ethers.utils.parseEther(amount);
+      toast.loading("Sending Transaction...");
       setIsLoading(true);
       //making transaction request
       await ethereum.request({
@@ -134,14 +146,12 @@ export const TransactionContextProvider = ({ children }) => {
       console.log(`Loading ${tnxHash.hash}`);
       //waiting for transaction to complete
       await tnxHash.wait();
+      toast.loading(`Loading ${tnxHash.hash}`);
       setIsLoading(false);
       console.log(`Success ${tnxHash.hash}`);
+      toast.success("Transaction Completed.");
 
-
-      // //Getting all transaction count
-      const transactionCount = await transtactionContract.getTransactionCount();
-      //setting transation count
-      setTransactionCount(transactionCount.toNumber());
+      checkIfTransactionExists();
 
     } catch (error) {
       setIsLoading(false);

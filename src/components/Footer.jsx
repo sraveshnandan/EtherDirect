@@ -10,7 +10,7 @@ const Footer = () => {
         {/* Upper Div  */}
         <div className="w-full md:flex-row mb-8 flex-col flex ">
           {/* Subscrbe Section  */}
-          <div className="flex-flex-col md:m-2 my-4 p-2 md:w-[30%] w-[70%]  ">
+          <div className="flex-flex-col md:m-2 my-4 p-2 md:w-[30%] w-full  ">
             <span className="text-white text-2xl">
               Subscribe to ETHerDirect Newsletter
             </span>
