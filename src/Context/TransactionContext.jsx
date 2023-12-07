@@ -37,7 +37,7 @@ export const TransactionContextProvider = ({ children }) => {
     try {
       if (!ethereum) {
         return toast.info("Please install metamask to continue.")
-        
+
       }
       const account = await ethereum.request({ method: "eth_requestAccounts" });
       setConnectedWallet(account[0]);
@@ -55,9 +55,9 @@ export const TransactionContextProvider = ({ children }) => {
 
   const getAllAvailableTransactions = async () => {
     try {
-        if (!ethereum) {
+      if (!ethereum) {
         return toast.info("Please install metamask to continue.")
-        
+
       }
       const transactionContract = getEthereumContract();
       //getting all transactions from blockchain
@@ -115,9 +115,9 @@ export const TransactionContextProvider = ({ children }) => {
     try {
       console.log("sendTransaction function invocked");
       const { addressTo, amount, keyword, message } = data;
-        if (!ethereum) {
+      if (!ethereum) {
         return toast.info("Please install metamask to continue.")
-        
+
       }
       //Instanciating Ethereum contract 
       const transtactionContract = getEthereumContract();
@@ -143,10 +143,11 @@ export const TransactionContextProvider = ({ children }) => {
       //Generating Transaction Hash
       let tnxHash = await transtactionContract.addToBlockchain(addressTo, parsedAmount, message, keyword);
       //setting loading state to true
-      console.log(`Loading ${tnxHash.hash}`);
+      toast.loading(`Loading ${tnxHash.hash}`);
       //waiting for transaction to complete
       await tnxHash.wait();
-      toast.loading(`Loading ${tnxHash.hash}`);
+      toast.success(`Success ${tnxHash.hash}`);
+
       setIsLoading(false);
       console.log(`Success ${tnxHash.hash}`);
       toast.success("Transaction Completed.");

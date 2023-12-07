@@ -14,6 +14,9 @@ function App() {
 
           <Route element={<RootLayout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<h2 className="my-20 text text-white text-4xl text-center">No  page yet.</h2>} />
+            <Route path="/services" element={<h2 className="my-20 text text-white text-4xl text-center">No  page yet.</h2>} />
+            <Route path="/contact" element={<h2 className="my-20 text text-white text-4xl text-center">No  page yet.</h2>} />
           </Route>
         </Routes>
       </BrowserRouter>

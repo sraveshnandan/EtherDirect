@@ -27,8 +27,8 @@ const Transations = () => {
 
         <div className='w-[70%] mx-auto  p-1 text-sm font-semibold my-2 blue-glassmorphism text-center '>
           {timestamp}
-
         </div>
+        <span className='text-sm text-center bg-green-600 rounded-full font-semibold hover:scale-95 p-2 '>Compleated.</span>
 
 
       </div>
