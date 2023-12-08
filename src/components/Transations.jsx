@@ -3,6 +3,7 @@ import { TransactionContext } from "../Context/TransactionContext";
 import SortenAddress from "../utils/ShortenAddress";
 import { FaEthereum, FaPlug } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { Loader } from "../components";
 
 
 const Transations = () => {
@@ -44,7 +45,9 @@ const Transations = () => {
         connectedWallet ? (
           <>
             <div className={`w-full flex ${toggle ? 'h-full' : 'md:h-[580px] h-[600px]'}   overflow-hidden items-center relative flex-col`}>
-              <button type='button' className=' rounded-md  px-5 py-2 hover:bg-primary hover:shadow-2xl hover:shadow-purple-500 text-black font-semibold bg-white duration-500 mb-4 -bottom-1 z-20 absolute cursour-pointer' onClick={() => setToggle(!toggle)}>{toggle ? 'Show Less' : 'Show More'}{toggle ? '▲' : '▼'}</button>
+              {
+                transactions.length > 0 ? (<button type='button' className=' rounded-md  px-5 py-2 hover:bg-primary hover:shadow-2xl hover:shadow-purple-500 text-black font-semibold bg-white duration-500 mb-4 -bottom-1 z-20 absolute cursour-pointer' onClick={() => setToggle(!toggle)}>{toggle ? 'Show Less' : 'Show More'}{toggle ? '▲' : '▼'}</button>) : null
+              }
 
               {/* //Heading  */}
               <span className='text text-5xl my-12'>Latest Transactions</span>
@@ -52,9 +55,22 @@ const Transations = () => {
               <div className='w-full  flex items-center flex-col  justify-center flex-wrap md:flex-row '>
 
 
-                {transactions.reverse().map((data, i) => (
-                  <TransactionCard key={i} {...data} />
-                ))}
+                {transactions.length > 0 ? (
+
+
+                  transactions.reverse().map((data, i) => (
+                    <TransactionCard key={i} {...data} />
+                  ))
+
+                ) : (
+                  <div className='flex flex-col my-12 gap-24 items-center justify-center'>
+                    <Loader /> <span className='text-white font-semibold text-xl'>Loading Transaction...</span>
+                  </div>
+                )
+
+
+
+                }
 
 
               </div>

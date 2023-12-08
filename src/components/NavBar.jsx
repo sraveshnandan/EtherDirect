@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { FaEthereum } from "react-icons/fa";
-import { HiMenuAlt4 } from "react-icons/hi";
+import { HiLockOpen, HiMenuAlt4 } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
 import { HiOutlineLogin } from "react-icons/hi";
 
 import { Link } from "react-router-dom";
+
 
 const NavBar = () => {
   const [open, setopen] = useState(false);
@@ -42,7 +43,7 @@ const NavBar = () => {
           onClick={() => console.log(`Connect wallet button is clicked.`)}
           className="bg-white  hidden hover:shadow-lg hover:text-black hover:bg-primary   hover:shadow-slate-600 transition-all duration-200 md:flex gap-2 items-center text-black px-3 py-1 rounded-full font-semibold"
         >
-          <HiOutlineLogin className="text-2xl hover:text-white text-black" />
+          <HiLockOpen className="text-2xl hover:text-white text-black" />
           Login
         </button>
 

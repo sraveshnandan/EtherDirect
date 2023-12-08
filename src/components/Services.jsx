@@ -1,5 +1,4 @@
 import React from "react";
-import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { MdLock } from "react-icons/md";
 import { FaGasPump } from "react-icons/fa6";
 import { TbClockBolt } from "react-icons/tb";

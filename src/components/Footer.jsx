@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaEthereum } from "react-icons/fa";
+import { HiLogout } from "react-icons/hi";
 
 const Footer = () => {
   return (
@@ -24,9 +25,9 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="w-8 m-1 h-8 text-xl  bg-white rounded-full font-[900] hover:shadow-slate-600 hover:shadow-md"
+                className="w-8 m-1 h-8 text-xl flex items-center justify-center  bg-white rounded-full font-[900] hover:shadow-slate-600 hover:shadow-md"
               >
-                ↘
+                <HiLogout />
               </button>
             </form>
           </div>

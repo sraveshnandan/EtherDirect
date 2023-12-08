@@ -6,6 +6,8 @@ import { toast } from "sonner";
 
 
 
+
+
 //createing context
 export const TransactionContext = createContext();
 
@@ -37,11 +39,13 @@ export const TransactionContextProvider = ({ children }) => {
     try {
       if (!ethereum) {
         return toast.info("Please install metamask to continue.")
-
       }
       const account = await ethereum.request({ method: "eth_requestAccounts" });
       setConnectedWallet(account[0]);
       toast.success("Wallet Connected.");
+      getAllAvailableTransactions();
+      checkIfTransactionExists();
+
     } catch (error) {
       console.log(error);
       toast.error("Unable to connect wallet.");
@@ -86,8 +90,6 @@ export const TransactionContextProvider = ({ children }) => {
     }
     if (connectedWallet === '') {
       ConnectWallet();
-      getAllAvailableTransactions();
-
     }
 
   }
@@ -117,11 +119,9 @@ export const TransactionContextProvider = ({ children }) => {
       const { addressTo, amount, keyword, message } = data;
       if (!ethereum) {
         return toast.info("Please install metamask to continue.")
-
       }
       //Instanciating Ethereum contract 
       const transtactionContract = getEthereumContract();
-
 
       //Parsing Ethereum value 
       const parsedAmount = ethers.utils.parseEther(amount);
@@ -153,7 +153,7 @@ export const TransactionContextProvider = ({ children }) => {
       toast.success("Transaction Completed.");
 
       checkIfTransactionExists();
-
+      getAllAvailableTransactions
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -164,7 +164,6 @@ export const TransactionContextProvider = ({ children }) => {
   // UseEffect to run function at startup 
   useEffect(() => {
     checkIfWalletIsConnected();
-    checkIfTransactionExists();
   }, [])
 
   return (

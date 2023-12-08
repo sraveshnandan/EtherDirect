@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { MdPrivateConnectivity } from "react-icons/md";
 import { FaEthereum, FaInfoCircle } from "react-icons/fa";
 import i from "../assets/m.svg";
 import SortenAddress from "../utils/ShortenAddress";
@@ -7,20 +6,13 @@ import { useState } from "react";
 import { TransactionContext } from "../Context/TransactionContext";
 import { Loader } from "../components"
 import { toast } from "sonner";
+import { FaPlugCircleBolt } from "react-icons/fa6";
 
 const Welcome = () => {
-
-
-
-
   const { connectedWallet, ConnectWallet, sendTransaction, isLoading } = useContext(TransactionContext);
-
-
   //Form state handler 
   const [formData, setFormData] = useState({ addressTo: "", amount: "", keyword: "", message: "" });
-
   //Form submit handler 
-
   const handleSubmit = (e) => {
     //Preventing form to reload the page 
     e.preventDefault();
@@ -47,8 +39,6 @@ const Welcome = () => {
 
 
   }
-
-
   return (
     <>
       {/* wrapper  */}
@@ -59,14 +49,12 @@ const Welcome = () => {
           <span className=" md:text-5xl md:text-left text-4xl text-center mb-8 font-[550]   text  ">
             Seamless Ethereum Transactions Made Easy
           </span>
-
           {/* subheading  */}
           <span className="text-light md:text-left text-center text-sm line-clamp-3 font-semibold my-4">
             Welcome to EtherDirect - Your Gateway to Instant Ethereum
             Transactions. Connect your MetaMask wallet and send ETH securely and
             swiftly to any address, hassle-free.
           </span>
-
           {/* CTA Buttons  */}
           {
             connectedWallet === '' ? (<button
@@ -74,7 +62,7 @@ const Welcome = () => {
               onClick={ConnectWallet}
               className="bg-white hover:shadow-lg hover:text-black hover:bg-primary pear  hover:shadow-slate-600 transition-all duration-200 flex gap-2 items-center text-black md:w-fit w-[90%] justify-center  mt-4 px-3 py-1 hover:ring-1 rounded-full font-semibold"
             >
-              <MdPrivateConnectivity className="text-4xl hover:text-white text-black" />
+              <FaPlugCircleBolt className="text-4xl hover:text-white text-black" />
               Connect Wallet
             </button>) : (<span className="text-green-500 flex gap-2 my-4 p-2 rounded-full bg-slate-800  w-fit "> <span className="">✅</span>Wallet Connected Successfully.</span>)
           }
